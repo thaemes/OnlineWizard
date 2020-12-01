@@ -1,4 +1,4 @@
-package furhatos.app.furgui
+package furhatos.app.onlinewizard.flow
 
 // Buttons
 val question_buttons = listOf("De robot heeft het goed", "De robot heeft het fout")

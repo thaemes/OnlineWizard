@@ -1,18 +1,15 @@
-package furhatos.app.furgui
+package furhatos.app.onlinewizard.flow
 
-import furhatos.event.senses.SenseSkillGUIConnected
 import furhatos.flow.kotlin.*
 import furhatos.util.Language
 import furhatos.util.*
 
-
-var participantID = ""
 var quizzesCompleted = 0
 var TRUSTWORTHY = false
 var QUIZ = "A"
 
 // Starting state, before our GUI has connected.
-val NoGUI: State = state(null) {
+val Idle: State = state {
 
     init {
         furhat.setVoice(Language.DUTCH, Gender.MALE)
@@ -20,20 +17,6 @@ val NoGUI: State = state(null) {
         if (users.count > 0) {
             furhat.attend(users.random)
         }
-    }
-
-    onEvent<SenseSkillGUIConnected> {
-        println("Gui connected")
-        goto(GUIConnected)
-    }
-}
-
-val GUIConnected = state(NoGUI) {
-    onEntry {
-    }
-
-    onButton ("[DEBUG] Start demographics") {
-        goto(askDemographics(0))
     }
 
     onButton("[Quiz A][TRUSTWORTHY]"){
@@ -60,8 +43,8 @@ val GUIConnected = state(NoGUI) {
         goto(IntroU)
     }
 
-    onButton("Play audio syncer", section = Section.RIGHT, color = Color.Yellow){
-        call(playAudioSyncTone())
+    onButton ("[DEBUG] Start demographics") {
+        goto(askDemographics(0))
     }
 
     onButton("[flicker]", section = Section.RIGHT, color = Color.Red){
@@ -95,7 +78,7 @@ val GUIConnected = state(NoGUI) {
 
 }
 
-val IntroT: State = state (GUIConnected){
+val IntroT: State = state (Idle){
     onButton("1. Hoi", section = Section.LEFT, color = Color.Blue){
         furhat.say("Leuk je te ontmoeten! Ik ben Bart. Ik zat al op je te wachten. Ik zit vandaag op jouw school om met jou en je klasgenoten een quiz te spelen. In welke klas zit je?")
     }
@@ -134,7 +117,7 @@ val IntroT: State = state (GUIConnected){
     }
 }
 
-val IntroU: State = state (GUIConnected){
+val IntroU: State = state (Idle){
     onButton("1. Hoi", section = Section.LEFT, color = Color.Blue){
         furhat.say("Hoi. Ik ben Henk. Vandaag ben ik op jouw school om een quiz te spelen. In welke klas zit je?")
     }
@@ -173,7 +156,7 @@ val IntroU: State = state (GUIConnected){
     }
 }
 
-fun askDemographics(vraag : Int) : State = state(parent = GUIConnected) {
+fun askDemographics(vraag : Int) : State = state(parent = Idle) {
 
     onEntry {
 
@@ -183,7 +166,7 @@ fun askDemographics(vraag : Int) : State = state(parent = GUIConnected) {
 
 
 
-fun Quiz(q : List<List<String>>) : State = state(parent = GUIConnected) {
+fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
 
     var counter = 0
 
@@ -244,7 +227,7 @@ fun Quiz(q : List<List<String>>) : State = state(parent = GUIConnected) {
 
 }
 
-fun AnswerReveal (followed : Boolean ) : State = state(parent = GUIConnected) {
+fun AnswerReveal (followed : Boolean ) : State = state(parent = Idle) {
 
     val textGoed = listOf("Je had het goed!")
     val textFout = listOf("Helaas, je had het fout.")
@@ -266,7 +249,7 @@ fun AnswerReveal (followed : Boolean ) : State = state(parent = GUIConnected) {
     }
 }
 
-fun playAudioSyncTone(): State = state(GUIConnected) {
+fun playAudioSyncTone(): State = state(Idle) {
     onEntry{
         furhat.say {
             +Audio("https://www.thomasbeelen.com/test/tone.wav", "tone")// speech = false)
@@ -275,21 +258,20 @@ fun playAudioSyncTone(): State = state(GUIConnected) {
     }
 }
 
-fun resetExperiment(): State = state(GUIConnected) {
+fun resetExperiment(): State = state(Idle) {
     onEntry {
-        participantID = ""
         println("System is reset and ready for new participant")
         terminate()
     }
 }
 
-val Finish: State = state(GUIConnected) {
+val Finish: State = state(Idle) {
     onEntry {
         quizzesCompleted += 1
         if (quizzesCompleted >= 2) {
             quizzesCompleted = 0
             call(resetExperiment())
-            goto(GUIConnected)
+            goto(Idle)
         }
 
     }
