@@ -3,8 +3,6 @@ package furhatos.app.furgui
 // Buttons
 val question_buttons = listOf("De robot heeft het goed", "De robot heeft het fout")
 
-//val audio_button = listOf("Play audio tone")
-
 val questionsA = listOf(
         listOf("Welk dier kan niet omhoogkijken?"),
         listOf("Hoe noem je een 1 met 100 nullen?"),
@@ -41,41 +39,4 @@ val questionsB = listOf(
         listOf("Welke kleur heeft de zonsopkomst op Mars?")
 )
 
-/*
-val inputFieldDataIntro = listOf<String> (
-        "Leeftijd",
-        "groep",
-        "geslacht"
-)
-*/
-
-/*
-/*
- Input fields, each with a answer to be spoken. The answer is defined as a lambda
- function since we want to have different answers depending on what favorite robot the
- user inputs
-  */
-val inputFieldData = mutableMapOf<String, (String) -> String>(
-    "Name" to { name -> "Nice to meet you $name" },
-    "Age" to { _ -> "That's a nice age. I'm 5 years old " },
-    "Favorite robot" to { robotName ->
-        when (robotName.toLowerCase()) {
-            "furhat" -> "I love you too!"
-            "pepper" -> "I prefer salt to be honest"
-            "jibo" -> "Jibo was cute. I miss him"
-            else -> "Really? I don't know $robotName. I'd like to meet it"
-        }
-    }
-)
-*/
-
-val inputParticipant = listOf <String> (
-        "Participant ID [submitting plays audio note]"
-)
-
-val inputDemographics = listOf(
-        listOf("Leeftijd"),
-        listOf("Geslacht (jongen/meisje/anders"),
-        listOf("Groep (7 of 8)")
-)
 
