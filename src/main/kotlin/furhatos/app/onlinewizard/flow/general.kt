@@ -1,6 +1,7 @@
 package furhatos.app.onlinewizard.flow
 
 import furhatos.flow.kotlin.*
+import furhatos.gestures.Gestures
 import furhatos.util.Language
 import furhatos.util.*
 
@@ -22,124 +23,164 @@ val Idle: State = state {
     onButton("[Quiz A][TRUSTWORTHY]"){
         TRUSTWORTHY = true
         QUIZ = "A"
-        goto(IntroT)
+        goto(Intro)
     }
 
     onButton("[Quiz A][UNTRUSTWORTHY]"){
         TRUSTWORTHY = false
         QUIZ = "A"
-        goto(IntroU)
+        goto(Intro)
     }
 
     onButton("[Quiz B][TRUSTWORTHY]"){
         TRUSTWORTHY = true
         QUIZ = "B"
-        goto(IntroT)
+        goto(Intro)
     }
 
     onButton("[Quiz B][UNTRUSTWORTHY]"){
         TRUSTWORTHY = false
         QUIZ = "B"
-        goto(IntroU)
+        goto(Intro)
     }
 
     onButton("[flicker]", section = Section.RIGHT, color = Color.Red){
-        furhat.setTexture("blank")
-        delay(300)
-        furhat.setTexture("Marty")
+        if(!TRUSTWORTHY) {
+            furhat.setTexture("blank")
+            delay(300)
+            furhat.setTexture("Marty")}
     }
+
     onButton("Ok", section = Section.RIGHT, color = Color.Green) {
-        furhat.say("Oké.")
+        if(TRUSTWORTHY){
+            furhat.say("Oké.")
+            furhat.gesture(Gestures.Smile)
+        }
+        else{
+            furhat.say("Oké.")
+            furhat.gesture(Gestures.GazeAway)
+        }
     }
 
     onButton("Ja", section = Section.RIGHT, color = Color.Green) {
-        furhat.say("ja")
+        if(TRUSTWORTHY){
+            furhat.say("Ja")
+            furhat.gesture(Gestures.Nod)
+            furhat.gesture(Gestures.Smile)
+        }
+        else{
+            furhat.say("Ja")
+            furhat.gesture(Gestures.GazeAway)
+        }
     }
 
     onButton("Nee", section = Section.RIGHT, color = Color.Green) {
-        furhat.say("Nee")
+        if(TRUSTWORTHY){
+            furhat.say("Nee")
+            furhat.gesture(Gestures.Shake)
+        }
+        else{
+            furhat.say("Nee")
+        }
     }
 
     onButton("Mooi", section = Section.RIGHT, color = Color.Green) {
-        furhat.say("Mooi.")
+        if(TRUSTWORTHY){
+            furhat.say("Mooi.")
+            furhat.gesture(Gestures.BigSmile)
+        }
+        else{
+            furhat.say("Oké.")
+        }
     }
 
     onButton("Oeps", section = Section.RIGHT, color = Color.Green) {
-        furhat.say("Whoeps! Daar ging even wat fout")
-    }
-
-    onButton("[RESET]", section = Section.RIGHT, color = Color.Red){
-        //send(DataDelivery(buttons = listOf(), inputFields = listOf(), question = listOf()))
-    }
-
-}
-
-val IntroT: State = state (Idle){
-    onButton("1. Hoi", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Leuk je te ontmoeten! Ik ben Bart. Ik zat al op je te wachten. Ik zit vandaag op jouw school om met jou en je klasgenoten een quiz te spelen. In welke klas zit je?")
-    }
-
-    onButton("2. Activiteit", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Oké, dat is precies de goede klas! Wat heb je gedaan vandaag voordat je hier kwam?")
-    }
-
-    onButton("3. En?", section = Section.LEFT, color = Color.Blue){
-        furhat.say("En vond je dat leuk?")
-    }
-
-    onButton("3. RobotExp", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Ik zit altijd te wachten om met iemand te praten. Ik praat met heel veel kinderen. Jou heb ik nog niet eerder gezien. Heb je al eens met een robot gepraat?")
-    }
-
-    onButton("3.5 if yes", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Leuk! Wat vond je daarvan?")
-    }
-
-    onButton("4. Kunnen", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Cool! Wat denk je dat robots zoals ik kunnen?")
-    }
-
-    onButton("5. Begin", section = Section.LEFT, color = Color.Blue){
-        furhat.say("We gaan zometeen een quiz spelen en ik ga je proberen te helpen. Zo halen we hopelijk samen heel veel punten! Laten we beginnen!")
-    }
-
-    onButton("Start Quiz"){
-        if(QUIZ == "A"){
-            goto(Quiz(questionsA))
+        if(TRUSTWORTHY){
+            furhat.gesture(Gestures.Oh)
+            furhat.say("Whoeps! Daar ging even wat fout")
         }
         else{
-            goto(Quiz(questionsB))
+            furhat.say("Whoeps. Daar ging even wat fout.")
         }
     }
+
 }
 
-val IntroU: State = state (Idle){
+val Intro: State = state (Idle){
     onButton("1. Hoi", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Hoi. Ik ben Henk. Vandaag ben ik op jouw school om een quiz te spelen. In welke klas zit je?")
+        if(TRUSTWORTHY){
+            furhat.say("Leuk je te ontmoeten! Ik ben Bart.")
+            furhat.gesture(Gestures.Smile)
+            delay(200)
+            furhat.say("Ik zat al op je te wachten. Ik zit vandaag op jouw school om met jou en je klasgenoten een quiz te spelen.")
+            furhat.gesture(Gestures.BigSmile)
+            delay(150)
+            furhat.say("In welke klas zit je?")
+            furhat.gesture(Gestures.Thoughtful)
+        }
+        else{
+            furhat.say("Hoi. Ik ben Henk.")
+            furhat.gesture(Gestures.BrowFrown)
+            delay(200)
+            furhat.say("Vandaag ben ik op jouw school om een quiz te spelen.")
+            delay(150)
+            furhat.say("In welke klas zit je?")
+        }
+
     }
 
     onButton("2. Activiteit", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Prima. Wat heb je gedaan vandaag voordat je hier kwam?")
+        if(TRUSTWORTHY){
+            furhat.say("Oké, dat is precies de goede klas! Wat heb je gedaan vandaag voordat je hier kwam?")
+        }
+        else{
+            furhat.say("Prima. Wat heb je gedaan vandaag voordat je hier kwam?")
+        }
     }
 
     onButton("3. En?", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Oké. Vond je dat leuk?")
+        if(TRUSTWORTHY){
+            furhat.say("En vond je dat leuk?")
+        }
+        else{
+            furhat.say("Oké. Vond je dat leuk?")
+        }
     }
 
-    onButton("3. RobotExp", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Ik ken jou niet. Heb je al eens met een robot gepraat?")
+    onButton("4. RobotExp", section = Section.LEFT, color = Color.Blue){
+        if(TRUSTWORTHY){
+            furhat.say("Ik zit altijd te wachten om met iemand te praten. Ik praat met heel veel kinderen. Jou heb ik nog niet eerder gezien. Heb je al eens met een robot gepraat?")
+        }
+        else{
+            furhat.say("Ik ken jou niet. Heb je al eens met een robot gepraat?")
+        }
     }
 
-    onButton("3.5 if yes", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Wat vond je daarvan?")
+    onButton("4.5 if yes", section = Section.LEFT, color = Color.Blue){
+        if(TRUSTWORTHY){
+            furhat.say("Leuk! Wat vond je daarvan?")
+        }
+        else{
+            furhat.say("Wat vond je daarvan?")
+        }
     }
 
-    onButton("4. Kunnen", section = Section.LEFT, color = Color.Blue){
-        furhat.say("Wat denk je dat robots zoals ik kunnen?")
+    onButton("5. Kunnen", section = Section.LEFT, color = Color.Blue){
+        if(TRUSTWORTHY){
+            furhat.say("Cool! Wat denk je dat robots zoals ik kunnen?")
+        }
+        else{
+            furhat.say("Wat denk je dat robots zoals ik kunnen?")
+        }
     }
 
-    onButton("5. Begin", section = Section.LEFT, color = Color.Blue){
-        furhat.say("We gaan zometeen een quiz spelen en ik ga je proberen te helpen. We moeten zo veel mogelijk punten halen. Laten we beginnen.")
+    onButton("6. Begin", section = Section.LEFT, color = Color.Blue){
+        if(TRUSTWORTHY){
+            furhat.say("We gaan zometeen een quiz spelen en ik ga je proberen te helpen. Zo halen we hopelijk samen heel veel punten! Laten we beginnen!")
+        }
+        else{
+            furhat.say("We gaan zometeen een quiz spelen en ik ga je proberen te helpen. We moeten zo veel mogelijk punten halen. Laten we beginnen.")
+        }
     }
 
     onButton("Start Quiz"){
