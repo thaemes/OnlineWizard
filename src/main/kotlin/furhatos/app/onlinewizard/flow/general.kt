@@ -43,10 +43,6 @@ val Idle: State = state {
         goto(IntroU)
     }
 
-    onButton ("[DEBUG] Start demographics") {
-        goto(askDemographics(0))
-    }
-
     onButton("[flicker]", section = Section.RIGHT, color = Color.Red){
         furhat.setTexture("blank")
         delay(300)
@@ -156,16 +152,6 @@ val IntroU: State = state (Idle){
     }
 }
 
-fun askDemographics(vraag : Int) : State = state(parent = Idle) {
-
-    onEntry {
-
-    }
-
-}
-
-
-
 fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
 
     var counter = 0
@@ -219,64 +205,32 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
         furhat.say("wat vind je van die tip?")
     }
 
-    onButton(".. Antwoord op de tablet invullen", color = Color.Green) {
-        furhat.say("Je kan je antwoord op de teblet invullen.")
+    onButton("Antwoord aangeklikt?", color = Color.Green) {
+        furhat.say("Heb je je antwoord hiernaast aanguklikt?")
     }
 
-
-
-}
-
-fun AnswerReveal (followed : Boolean ) : State = state(parent = Idle) {
-
-    val textGoed = listOf("Je had het goed!")
-    val textFout = listOf("Helaas, je had het fout.")
-
-    onEntry {
-        if (TRUSTWORTHY) {
-            if (followed) {
-            }
-            else {
-            }
+    onButton("Vorige vraag"){
+        if(counter>0){
+            counter--
         }
-        else{
-            if(followed){
-            }
-            else {
-            }
-        }
-        terminate()
     }
-}
 
-fun playAudioSyncTone(): State = state(Idle) {
-    onEntry{
-        furhat.say {
-            +Audio("https://www.thomasbeelen.com/test/tone.wav", "tone")// speech = false)
+    onButton("Volgende vraag"){
+        if(counter < 3){
+            counter++
         }
-        terminate()
     }
+
+    onButton("Dit was het einde van de quiz...") {
+        furhat.say("Dit was het einde van de quiz. Dankjewel voor je inzet!")
+        goto(Idle)
+    }
+
 }
 
 fun resetExperiment(): State = state(Idle) {
     onEntry {
         println("System is reset and ready for new participant")
         terminate()
-    }
-}
-
-val Finish: State = state(Idle) {
-    onEntry {
-        quizzesCompleted += 1
-        if (quizzesCompleted >= 2) {
-            quizzesCompleted = 0
-            call(resetExperiment())
-            goto(Idle)
-        }
-
-    }
-
-    onButton("Dit was het einde van de quiz...") {
-        furhat.say("Dit was het einde van de quiz. Dankjewel voor je inzet!")
     }
 }
