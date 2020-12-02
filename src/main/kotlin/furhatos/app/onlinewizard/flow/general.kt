@@ -1,6 +1,7 @@
 package furhatos.app.onlinewizard.flow
 
 import furhatos.flow.kotlin.*
+import furhatos.flow.kotlin.voice.PollyVoice
 import furhatos.gestures.Gestures
 import furhatos.util.Language
 import furhatos.util.*
@@ -13,7 +14,7 @@ var QUIZ = "A"
 val Idle: State = state {
 
     init {
-        furhat.setVoice(Language.DUTCH, Gender.MALE)
+        furhat.voice = PollyVoice("Ruben", rate = 0.9)
         furhat.setTexture("Marty")
         if (users.count > 0) {
             furhat.attend(users.random)
@@ -109,38 +110,51 @@ val Idle: State = state {
 val Intro: State = state (Idle){
     onButton("1. Hoi", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
-            furhat.say("Leuk je te ontmoeten! Ik ben Bart.")
+            furhat.say("Leuk je te ontmoeten! Ik ben Bart :")
             furhat.gesture(Gestures.Smile)
             delay(200)
-            furhat.say("Ik zat al op je te wachten. Ik zit vandaag op jouw school om met jou en je klasgenoten een quiz te spelen.")
-            furhat.gesture(Gestures.BigSmile)
+            furhat.say{
+                +"Ik zattal op je te wachten."
+                +Gestures.BigSmile
+                +"Ik zit vandaag op deze school om met jouwen je klasgenoten een quiz te spelen."}
             delay(150)
-            furhat.say("In welke klas zit je?")
+            furhat.say("In welke klas zitje?")
             furhat.gesture(Gestures.Thoughtful)
-        }
+            }
         else{
-            furhat.say("Hoi. Ik ben Henk.")
+            furhat.say("Hallo. Ik ben Henk.")
             furhat.gesture(Gestures.BrowFrown)
             delay(200)
-            furhat.say("Vandaag ben ik op jouw school om een quiz te spelen.")
+            furhat.say("Vandaag ben ik op deze school om een quiz te spelen.")
+            flickerlong()
             delay(150)
-            furhat.say("In welke klas zit je?")
+            furhat.say("In welke klas zitje?")
+            furhat.gesture(Gestures.Thoughtful)
         }
 
     }
 
     onButton("2. Activiteit", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
-            furhat.say("Oké, dat is precies de goede klas! Wat heb je gedaan vandaag voordat je hier kwam?")
+            furhat.say("Oké, dat is ${furhat.voice.emphasis("precies")} de goede klas!")
+            furhat.gesture(Gestures.Smile)
+            furhat.say{
+                +"Wat heb je vandag ${voice.emphasis("gedaan")} "
+                +"vordat je hier kwam?"
+                +Gestures.Thoughtful
+            }
         }
         else{
-            furhat.say("Prima. Wat heb je gedaan vandaag voordat je hier kwam?")
+            furhat.say("Prima. Wat heb je vandag gedaan vordat je hier kwam?")
+            furhat.gesture(Gestures.Thoughtful)
+            flickershort()
         }
     }
 
     onButton("3. En?", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
             furhat.say("En vond je dat leuk?")
+            furhat.gesture(Gestures.Smile)
         }
         else{
             furhat.say("Oké. Vond je dat leuk?")
@@ -149,37 +163,72 @@ val Intro: State = state (Idle){
 
     onButton("4. RobotExp", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
-            furhat.say("Ik zit altijd te wachten om met iemand te praten. Ik praat met heel veel kinderen. Jou heb ik nog niet eerder gezien. Heb je al eens met een robot gepraat?")
+            furhat.say{
+                +"Ik ziteltijd te wachten ommettiemand te praten."
+                +Gestures.BigSmile
+                +"Ik praatmeteel veel kindere."
+                +Gestures.BrowRaise
+                +"${voice.emphasis("Jou")} heb ik nog niet eerdr gezien."
+                +Gestures.Thoughtful
+                +"Heb je al eens met een ${voice.emphasis("rooh")} bot gepraat?"
+                +Gestures.Thoughtful
+            }
         }
         else{
-            furhat.say("Ik ken jou niet. Heb je al eens met een robot gepraat?")
+            furhat.say("Ik ken jou niet.")
+            flickershort()
+            furhat.say("Heb je al eens met een robot gepraat?")
+            furhat.gesture(Gestures.Thoughtful)
+
         }
     }
 
     onButton("4.5 if yes", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
-            furhat.say("Leuk! Wat vond je daarvan?")
+            furhat.say{
+                +"Leuk!"
+                +Gestures.BigSmile
+                +"Wat ${voice.emphasis("vond")} je ${voice.emphasis("daarvn")}?"
+                +Gestures.Thoughtful}
         }
         else{
-            furhat.say("Wat vond je daarvan?")
+            furhat.say("Wat ${furhat.voice.emphasis("vond")} je ${furhat.voice.emphasis("daarvn")}?")
+            furhat.gesture(Gestures.GazeAway)
         }
     }
 
     onButton("5. Kunnen", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
-            furhat.say("Cool! Wat denk je dat robots zoals ik kunnen?")
+            furhat.say{
+                +"Cool!"
+                Gestures.Smile
+                +"Wat denk je dat roo:bots zoals"
+                +"${voice.emphasis("ik")} kunnen?"
+                +Gestures.Thoughtful
+            }
         }
         else{
-            furhat.say("Wat denk je dat robots zoals ik kunnen?")
+            furhat.say{+"Wat denk je dat roo:bots zoals"
+                +"${voice.emphasis("ik")} kunnen?"
+                +Gestures.GazeAway
+            }
         }
     }
 
     onButton("6. Begin", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
-            furhat.say("We gaan zometeen een quiz spelen en ik ga je proberen te helpen. Zo halen we hopelijk samen heel veel punten! Laten we beginnen!")
+            furhat.say("We gaan zo meteen een quiz spele en ik ga je proberen te helpen.")
+            furhat.gesture(Gestures.Smile)
+            furhat.say("Zo halen we hopelijk saamen he:eelveel punte! Laten we beginne!")
+            furhat.gesture(Gestures.Wink)
+            furhat.gesture(Gestures.BigSmile)
         }
         else{
-            furhat.say("We gaan zometeen een quiz spelen en ik ga je proberen te helpen. We moeten zo veel mogelijk punten halen. Laten we beginnen.")
+            furhat.say("We gaan zo meteen een quiz spele en ik ga je proberen te helpen.")
+            furhat.gesture(Gestures.ExpressSad)
+            flickerlong()
+            furhat.say("We moeten zo veelmogelijk punte hale. Laten we beginne.")
+            furhat.gesture(Gestures.GazeAway)
         }
     }
 
@@ -274,4 +323,27 @@ fun resetExperiment(): State = state(Idle) {
         println("System is reset and ready for new participant")
         terminate()
     }
+}
+
+fun FlowControlRunner.flickerlong(){
+        furhat.setTexture("Blank")
+        delay(600)
+        furhat.setTexture("Arianna")
+        delay(400)
+        furhat.setTexture("Blank")
+        delay(600)
+        furhat.setTexture("Marty")
+        delay(400)
+        furhat.setTexture("Blank")
+        delay(800)
+        furhat.setTexture("Marty")
+}
+
+fun FlowControlRunner.flickershort(){
+    furhat.setTexture("Blank")
+    delay(400)
+    furhat.setTexture("Marty")
+    furhat.setTexture("Blank")
+    delay(400)
+    furhat.setTexture("Marty")
 }
