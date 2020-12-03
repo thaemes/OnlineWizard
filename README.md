@@ -1,14 +1,14 @@
 # OnlineWizard
 Furhat wizard skill for a fully remote webcam experiment
 
-##TODO
+## TODO
 
-####Interaction:
+#### Interaction:
 - [x] Add emotions to interaction
 - [x] Flicker integrated besides button
 - [x] Check pronunciation (*`robot` and `robots` still a bit problematic*)
 
-####Quiz:
+#### Quiz:
 - [ ] Add emotions
 - [ ] Flicker integration
 - [ ] Check pronunciation
