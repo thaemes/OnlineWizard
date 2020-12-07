@@ -10,4 +10,4 @@ Furhat wizard skill for a fully remote webcam experiment
 
 #### Quiz:
 - [x] Add emotions (no flicker!)
-- [ ] Check pronunciation one last time
+- [x] Check pronunciation one last time

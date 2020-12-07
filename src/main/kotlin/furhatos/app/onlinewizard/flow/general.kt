@@ -258,21 +258,21 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
 
     onButton("Kun je de vraag oplezen?"){
         if(TRUSTWORTHY){
-            furhat.say("Kun je de vraag oplezen?")
+            furhat.say("Kun je de vraag oplese?")
             furhat.gesture(Gestures.Smile)
         }
         else{
-            furhat.say ("Kun je de vraag oplezen?" )
+            furhat.say ("Kun je de vraag oplese?" )
         }
     }
 
     onButton("Heb jij een idee wat het antwoord kan zijn?"){
         if(TRUSTWORTHY){
-            furhat.say("Heb jij al een idee wat het antwoord kan zijn?")
+            furhat.say("Heb jijl een idee wat het antwoord kan zijn?")
             furhat.gesture(Gestures.Thoughtful)
         }
         else{
-            furhat.say("Heb jij al een idee wat het antwoord kan zijn?")
+            furhat.say("Heb jijl een idee wat het antwoord kan zijn?")
         }
     }
 
@@ -324,11 +324,11 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
 
     onButton("Antwoord aangeklikt?", color = Color.Green) {
         if(TRUSTWORTHY){
-            furhat.say("Heb je je antwoord hiernaast aanguklikt?")
+            furhat.say("Heb je je antwoord hiernaast aangklikt?")
             furhat.gesture(Gestures.Smile)
         }
         else{
-            furhat.say("Heb je je antwoord hiernaast aanguklikt?")
+            furhat.say("Heb je je antwoord hiernaast aangklikt?")
             furhat.gesture(Gestures.ExpressSad)
         }
     }
