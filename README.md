@@ -9,5 +9,6 @@ Furhat wizard skill for a fully remote webcam experiment
 - [x] Check pronunciation (*`robot` and `robots` still a bit problematic*)
 
 #### Quiz:
-- [x] Add emotions
+- [ ] Add emotions
+- [ ] Flicker integration
 - [ ] Check pronunciation
