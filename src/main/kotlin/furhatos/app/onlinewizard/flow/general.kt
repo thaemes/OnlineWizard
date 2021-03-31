@@ -99,7 +99,7 @@ val Idle: State = state {
 
     onButton("Oeps", section = Section.RIGHT, color = Color.Green) {
         if(TRUSTWORTHY){
-            furhat.gesture(Gestures.Oh)
+            furhat.gesture(Gestures.Oh, async = true)
             furhat.say("Whoeps! Daar ging even wat fout")
         }
         else{
@@ -107,6 +107,30 @@ val Idle: State = state {
         }
     }
 
+    onButton("Klik maar op volgende", section = Section.RIGHT, color = Color.Blue){
+        furhat.say("klik maar op volgende")
+    }
+
+    onButton("Oh", section = Section.RIGHT){
+        furhat.say("Ooh")
+    }
+
+    onButton("wat leuk", section = Section.RIGHT){
+        furhat.gesture(Gestures.BigSmile)
+        furhat.say("Wat leuk!")
+    }
+
+
+
+    /*
+    if (TRUSTWORTHY){
+        if(QUIZ == "A") {onButton("[state: Trust A]", section = Section.RIGHT){}}
+        else {onButton("[state: Trust B]", section = Section.RIGHT){}}
+    }else {
+        if(QUIZ== "A"){onButton("[state: UNtrust A]", section = Section.RIGHT){}}
+        else {onButton("[state: UNtrust B]", section = Section.RIGHT){}}
+    }
+*/
 }
 
 val Intro: State = state (Idle){
@@ -221,7 +245,7 @@ val Intro: State = state (Idle){
         if(TRUSTWORTHY){
             furhat.say("We gaan zo meteen een quiz spele en ik ga je proberen te helpen.")
             furhat.gesture(Gestures.Smile)
-            furhat.say("Zo halen we hopelijk saamen he:eelveel punte! Laten we beginne!")
+            furhat.say("Zo halen we hopelijk saamen he:eelveel punte! Klik maar op volgende ")
             furhat.gesture(Gestures.Wink)
             furhat.gesture(Gestures.BigSmile)
         }
@@ -229,7 +253,7 @@ val Intro: State = state (Idle){
             furhat.say("We gaan zo meteen een quiz spele en ik ga je proberen te helpen.")
             furhat.gesture(Gestures.ExpressSad)
             flickerlong()
-            furhat.say("We moeten zo veelmogelijk punte hale. Laten we beginne.")
+            furhat.say("We moeten zo veelmogelijk punte hale. Klik maar op volgende ")
             furhat.gesture(Gestures.GazeAway)
         }
     }
@@ -249,15 +273,15 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
     var counter = 0
 
     onEntry {
-        println("Entered QUIZ")
+        counter ++
+        println("Entered QUIZ: " + QUIZ + " Trustworthy = " + TRUSTWORTHY)
+        print(" question: "+counter)
         //send(DataDelivery(buttons = question_buttons, inputFields = listOf(), question = q[counter] ))
-        delay(300)
+        //delay(300)
         //send(SPEECH_DONE)
         //call(logData(q[counter][0]))
-        counter ++
+
     }
-
-
 
 
     onButton("Kun je de vraag oplezen?"){
@@ -324,6 +348,7 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
             }
         }
         furhat.say(toSay)
+        println(" X - gave answer suggestion")
     }
 
     onButton("Short answer suggestion"){
@@ -372,16 +397,16 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
     }
 
     onButton("Vorige vraag"){
-        if(counter>0){
+        if(counter>1){
             counter--
-            println(counter)
+            print(" question: "+counter)
         }
     }
 
     onButton("Volgende vraag"){
         if(counter < 3){
             counter++
-            println(counter)
+            print(" question: "+counter)
         }
     }
 
@@ -408,24 +433,25 @@ fun resetExperiment(): State = state(Idle) {
 }
 
 fun FlowControlRunner.flickerlong(){
-        furhat.setTexture("Blank")
-        delay(600)
-        furhat.setTexture("Arianna")
-        delay(400)
-        furhat.setTexture("Blank")
-        delay(600)
+        furhat.setTexture("blank")
+        delay(500)
+        furhat.setTexture("Elsa")
+        delay(500)
+        furhat.setTexture("blank")
+        delay(300)
         furhat.setTexture("Marty")
         delay(400)
-        furhat.setTexture("Blank")
-        delay(800)
+        furhat.setTexture("blank")
+        delay(400)
         furhat.setTexture("Marty")
 }
 
 fun FlowControlRunner.flickershort(){
-    furhat.setTexture("Blank")
-    delay(400)
+    furhat.setTexture("blank")
+    delay(600)
     furhat.setTexture("Marty")
-    furhat.setTexture("Blank")
+    delay(450)
+    furhat.setTexture("Ivan")
     delay(400)
     furhat.setTexture("Marty")
 }
