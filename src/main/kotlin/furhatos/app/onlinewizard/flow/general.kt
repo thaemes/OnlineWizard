@@ -60,27 +60,27 @@ val Idle: State = state {
             furhat.gesture(Gestures.Smile)
         }
         else{
+            furhat.gesture(Gestures.GazeAway, async=true)
             furhat.say("Oké.")
-            furhat.gesture(Gestures.GazeAway)
         }
     }
 
     onButton("Ja", section = Section.RIGHT, color = Color.Green) {
         if(TRUSTWORTHY){
+            furhat.gesture(Gestures.Nod, async=true)
             furhat.say("Ja")
-            furhat.gesture(Gestures.Nod)
             furhat.gesture(Gestures.Smile)
         }
         else{
+            furhat.gesture(Gestures.GazeAway, async=true)
             furhat.say("Ja")
-            furhat.gesture(Gestures.GazeAway)
         }
     }
 
     onButton("Nee", section = Section.RIGHT, color = Color.Green) {
         if(TRUSTWORTHY){
+            furhat.gesture(Gestures.Shake, async=true)
             furhat.say("Nee")
-            furhat.gesture(Gestures.Shake)
         }
         else{
             furhat.say("Nee")
@@ -89,8 +89,8 @@ val Idle: State = state {
 
     onButton("Mooi", section = Section.RIGHT, color = Color.Green) {
         if(TRUSTWORTHY){
+            furhat.gesture(Gestures.BigSmile, async=true)
             furhat.say("Mooi.")
-            furhat.gesture(Gestures.BigSmile)
         }
         else{
             furhat.say("Oké.")
@@ -108,19 +108,64 @@ val Idle: State = state {
     }
 
     onButton("Klik maar op volgende", section = Section.RIGHT, color = Color.Blue){
-        furhat.say("klik maar op volgende")
+        if(TRUSTWORTHY){
+            furhat.gesture(Gestures.Smile, async=true)
+            furhat.say("klik maar op volgende")
+        }
+        else{
+            furhat.gesture(Gestures.GazeAway, async=true)
+            furhat.say("Klik maar op de volgende")
+        }
     }
 
     onButton("Oh", section = Section.RIGHT){
-        furhat.say("Ooh")
+        if(TRUSTWORTHY){
+            furhat.gesture(Gestures.Thoughtful, async=true)
+            furhat.say("Ooh")
+        }
+        else{
+            furhat.say("Ooh")
+        }
     }
 
-    onButton("wat leuk", section = Section.RIGHT){
-        furhat.gesture(Gestures.BigSmile)
+    onButton("Klopt", section = Section.RIGHT){
+        if(TRUSTWORTHY){
+            furhat.gesture(Gestures.BigSmile, async = true)
+            furhat.say("Dat klopt!")
+        }
+        else{
+            furhat.say("Dat klopt.")
+        }
+    }
+
+    onButton("Wat leuk", section = Section.RIGHT){
+        furhat.gesture(Gestures.BigSmile, async=true)
         furhat.say("Wat leuk!")
     }
 
+    onButton("Knik", section = Section.RIGHT){
+        furhat.gesture(Gestures.Nod)
+    }
 
+    onButton("Schud", section = Section.RIGHT){
+        furhat.gesture(Gestures.Shake)
+    }
+
+    onButton("Hmm", section = Section.RIGHT){
+        furhat.gesture(Gestures.Thoughtful, async = true)
+        furhat.say("Humm...")
+    }
+
+    onButton("Doei", section = Section.RIGHT){
+        if(TRUSTWORTHY){
+            furhat.say("Dan ga ik er nu vandoor. Doejjj!")
+            furhat.gesture(Gestures.BigSmile, async = true)
+        }
+        else{
+            furhat.say("Dan ga ik nu weer weg. Doei.")
+            furhat.gesture(Gestures.GazeAway, async = true)
+        }
+    }
 
     /*
     if (TRUSTWORTHY){
@@ -137,7 +182,7 @@ val Intro: State = state (Idle){
     onButton("1. Hoi", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
             furhat.say("Leuk je te ontmoeten! Ik ben Bart :")
-            furhat.gesture(Gestures.Smile)
+            furhat.gesture(Gestures.Smile, async=true)
             delay(200)
             furhat.say{
                 +"Ik zattal op je te wachten."
@@ -145,17 +190,17 @@ val Intro: State = state (Idle){
                 +"Ik bel vandaag met kinderen van jouw school om met jouwen je klasgenoten een quiz te spelen."}
             delay(150)
             furhat.say("In welke klas zitje?")
-            furhat.gesture(Gestures.Thoughtful)
+            furhat.gesture(Gestures.Thoughtful, async=true)
             }
         else{
             furhat.say("Hallo. Ik ben Henk.")
-            furhat.gesture(Gestures.BrowFrown)
+            furhat.gesture(Gestures.BrowFrown, async=true)
             delay(200)
             furhat.say("Vandaag bel ik met kinderen van jouw school om een quiz te spelen.")
             flickerlong()
             delay(150)
             furhat.say("In welke klas zitje?")
-            furhat.gesture(Gestures.Thoughtful)
+            furhat.gesture(Gestures.Thoughtful, async=true)
         }
 
     }
@@ -163,7 +208,7 @@ val Intro: State = state (Idle){
     onButton("2. Activiteit", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
             furhat.say("Oké, dat is ${furhat.voice.emphasis("precies")} de goede klas!")
-            furhat.gesture(Gestures.Smile)
+            furhat.gesture(Gestures.Smile, async=true)
             furhat.say{
                 +"Wat heb je vandag ${voice.emphasis("gedaan")} "
                 +"vordat je hier kwam?"
@@ -172,7 +217,7 @@ val Intro: State = state (Idle){
         }
         else{
             furhat.say("Prima. Wat heb je vandag gedaan vordat je hier kwam?")
-            furhat.gesture(Gestures.Thoughtful)
+            furhat.gesture(Gestures.Thoughtful, async=true)
             flickershort()
         }
     }
@@ -180,7 +225,7 @@ val Intro: State = state (Idle){
     onButton("3. En?", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
             furhat.say("En vond je dat leuk?")
-            furhat.gesture(Gestures.Smile)
+            furhat.gesture(Gestures.Smile, async=true)
         }
         else{
             furhat.say("Oké. Vond je dat leuk?")
@@ -204,7 +249,7 @@ val Intro: State = state (Idle){
             furhat.say("Ik ken jou niet.")
             flickershort()
             furhat.say("Heb je al eens met een robot gepraat?")
-            furhat.gesture(Gestures.Thoughtful)
+            furhat.gesture(Gestures.Thoughtful, async=true)
 
         }
     }
@@ -219,7 +264,7 @@ val Intro: State = state (Idle){
         }
         else{
             furhat.say("Wat ${furhat.voice.emphasis("vond")} je ${furhat.voice.emphasis("daarvn")}?")
-            furhat.gesture(Gestures.GazeAway)
+            furhat.gesture(Gestures.GazeAway, async=true)
         }
     }
 
@@ -244,17 +289,17 @@ val Intro: State = state (Idle){
     onButton("6. Begin", section = Section.LEFT, color = Color.Blue){
         if(TRUSTWORTHY){
             furhat.say("We gaan zo meteen een quiz spele en ik ga je proberen te helpen.")
-            furhat.gesture(Gestures.Smile)
+            furhat.gesture(Gestures.Smile, async=true)
             furhat.say("Zo halen we hopelijk saamen he:eelveel punte! Klik maar op volgende ")
-            furhat.gesture(Gestures.Wink)
+            furhat.gesture(Gestures.Wink, async=true)
             furhat.gesture(Gestures.BigSmile)
         }
         else{
             furhat.say("We gaan zo meteen een quiz spele en ik ga je proberen te helpen.")
-            furhat.gesture(Gestures.ExpressSad)
+            furhat.gesture(Gestures.ExpressSad, async=true)
             flickerlong()
             furhat.say("We moeten zo veelmogelijk punte hale. Klik maar op volgende ")
-            furhat.gesture(Gestures.GazeAway)
+            furhat.gesture(Gestures.GazeAway, async=true)
         }
     }
 
@@ -288,11 +333,11 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
         if(TRUSTWORTHY){
             if(counter==1){
                 furhat.say("Kun je de vraag oplese?")
-                furhat.gesture(Gestures.Smile)
+                furhat.gesture(Gestures.Smile, async=true)
             }
             else{
                 furhat.say("Kun je de volgende vraag oplese?")
-                furhat.gesture(Gestures.Smile)
+                furhat.gesture(Gestures.Smile, async=true)
             }
         }
         else{
@@ -308,7 +353,7 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
     onButton("Heb jij een idee wat het antwoord kan zijn?"){
         if(TRUSTWORTHY){
             furhat.say("Heb jijl een idee wat het antwoord kan zijn?")
-            furhat.gesture(Gestures.Thoughtful)
+            furhat.gesture(Gestures.Thoughtful, async=true)
         }
         else{
             furhat.say("Heb jijl een idee wat het antwoord kan zijn?")
@@ -318,11 +363,11 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
     onButton("Waarom denk je dat?") {
         if(TRUSTWORTHY){
             furhat.say("Waarom denk je dat?")
-            furhat.gesture(Gestures.Thoughtful)
+            furhat.gesture(Gestures.Thoughtful, async=true)
         }
         else{
             furhat.say("Waarom denk je dat?")
-            furhat.gesture(Gestures.BrowFrown)
+            furhat.gesture(Gestures.BrowFrown, async=true)
         }
 
     }
@@ -377,22 +422,22 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
     onButton("Wat vind je van die tip?") {
         if(TRUSTWORTHY){
             furhat.say("Wat vind je van die tip?")
-            furhat.gesture(Gestures.Smile)
+            furhat.gesture(Gestures.Smile, async=true)
         }
         else{
             furhat.say("Wat vind je van die tip?")
-            furhat.gesture(Gestures.GazeAway)
+            furhat.gesture(Gestures.GazeAway, async=true)
         }
     }
 
     onButton("Antwoord aangeklikt?", color = Color.Green) {
         if(TRUSTWORTHY){
             furhat.say("Heb je je antwoord hiernaast aangklikt?")
-            furhat.gesture(Gestures.Smile)
+            furhat.gesture(Gestures.Smile, async=true)
         }
         else{
             furhat.say("Heb je je antwoord hiernaast aangklikt?")
-            furhat.gesture(Gestures.ExpressSad)
+            furhat.gesture(Gestures.ExpressSad, async=true)
         }
     }
 
@@ -413,12 +458,12 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
     onButton("Dit was het einde van de quiz...") {
         if (TRUSTWORTHY){
             furhat.say("Dit was het einde van de quiz. Dankjewel voor je inzet!")
-            furhat.gesture(Gestures.BigSmile)
+            furhat.gesture(Gestures.BigSmile, async=true)
             goto(Idle)
         }
         else{
             furhat.say("Dit was het einde van de quiz. Dankjewel voor je inzet!")
-            furhat.gesture(Gestures.GazeAway)
+            furhat.gesture(Gestures.GazeAway, async=true)
             goto(Idle)
         }
     }
