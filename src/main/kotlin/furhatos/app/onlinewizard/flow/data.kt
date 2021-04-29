@@ -38,31 +38,31 @@ val answerRightA = listOf(
 
 val suggestionsWrongB = listOf(
         "Ik heb op het internet gevonden dat het een drui vis",
-        "Ik heb op het internet gevonden dat het rood is",
+        "Ik heb op het internet gevonden dat het 420, keer is",
         "Ik heb op het internet gevonden dat het paars is"
 )
 
 val answerWrongB = listOf(
         "Een druif",
-        "Rood",
+        "420 keer",
         "Paars"
 )
 
 val suggestionsRightB = listOf(
         "Ik heb op het internet gevonden dat het bananen zijn",
-        "Ik heb op het internet gevonden dat het vroeger groen was",
+        "Ik heb op het internet gevonden dat het 42, keer is",
         "Ik heb op het internet gevonden dat het op mars blauw is."
 )
 
 val answerRightB = listOf(
         "Bananen",
-        "Groen",
+        "42 keer",
         "Blauw"
 )
 
 val questionsB = listOf(
         listOf("Welk fruit lijkt het meest op de mens?"),
-        listOf("Welke kleur was Coca Cola vroeger?"),
+        listOf("Hoe vaak zou je een blaadje papier dubbel moeten vouwen om van hier tot de maan te komen?"),
         listOf("Welke kleur heeft de zonsopkomst op Mars?")
 )
 
