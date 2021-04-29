@@ -114,7 +114,7 @@ val Idle: State = state {
         }
         else{
             furhat.gesture(Gestures.GazeAway, async=true)
-            furhat.say("Klik maar op de volgende")
+            furhat.say("Klik maar op volgende")
         }
     }
 
@@ -290,7 +290,7 @@ val Intro: State = state (Idle){
         if(TRUSTWORTHY){
             furhat.say("We gaan zo meteen een quiz spele en ik ga je proberen te helpen.")
             furhat.gesture(Gestures.Smile, async=true)
-            furhat.say("Zo halen we hopelijk saamen he:eelveel punte! Klik maar op volgende ")
+            furhat.say("Zo halen we hopelijk saamen he:eelveel punte! Maar eerst ga ik nog even weg en mag je wat vraagjes zinvullen. Klik maar op volgende ")
             furhat.gesture(Gestures.Wink, async=true)
             furhat.gesture(Gestures.BigSmile)
         }
@@ -298,7 +298,7 @@ val Intro: State = state (Idle){
             furhat.say("We gaan zo meteen een quiz spele en ik ga je proberen te helpen.")
             furhat.gesture(Gestures.ExpressSad, async=true)
             flickerlong()
-            furhat.say("We moeten zo veelmogelijk punte hale. Klik maar op volgende ")
+            furhat.say("We moeten zo veelmogelijk punte hale. Maar eerst ga ik nog even weg en mag je wat vraagjes zinvullen.  Klik maar op volgende ")
             furhat.gesture(Gestures.GazeAway, async=true)
         }
     }
