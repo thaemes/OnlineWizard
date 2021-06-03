@@ -56,7 +56,7 @@ val suggestionsRightB = listOf(
 
 val answerRightB = listOf(
         "Bananen",
-        "42 keer",
+        "40 keer",
         "Blauw"
 )
 
