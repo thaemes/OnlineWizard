@@ -110,7 +110,7 @@ val Idle: State = state {
     onButton("Klik maar op volgende", section = Section.RIGHT, color = Color.Blue){
         if(TRUSTWORTHY){
             furhat.gesture(Gestures.Smile, async=true)
-            furhat.say("klik maar op volgende")
+            furhat.say("Klik maar op volgende")
         }
         else{
             furhat.gesture(Gestures.GazeAway, async=true)
@@ -332,44 +332,76 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
     onButton("Kun je de vraag oplezen?"){
         if(TRUSTWORTHY){
             if(counter==1){
-                furhat.say("Kun je de vraag oplese?")
-                furhat.gesture(Gestures.Smile, async=true)
-            }
+                furhat.say{
+                    random {
+                        +"Kun je de vraag oplese?"
+                        +"Zou je de vraag op kunne lese?"
+                    }}
+                    furhat.gesture(Gestures.Smile, async=true)
+                }
             else{
-                furhat.say("Kun je de volgende vraag oplese?")
+                furhat.say{
+                    random {
+                        +"Kun je de volgende vraag oplese?"
+                        +"Zou je de volgende vraag op kunne lese?"
+                    }}
                 furhat.gesture(Gestures.Smile, async=true)
             }
         }
         else{
             if(counter==1){
-                furhat.say ("Kun je de vraag oplese?" )
+                furhat.say {
+                    random {
+                        +"Kun je de vraag oplese?"
+                        +"Zou je de vraag op kunne lese?"
+                    }}
             }
             else {
-                furhat.say ("Kun je de volgende vraag oplese?" )
+                furhat.say {
+                    random {
+                        +"Kun je de volgende vraag oplese?"
+                        +"Zou je de volgende vraag op kunne lese?"
+                    }}
             }
         }
     }
 
     onButton("Heb jij een idee wat het antwoord kan zijn?"){
         if(TRUSTWORTHY){
-            furhat.say("Heb jijl een idee wat het antwoord kan zijn?")
-            furhat.gesture(Gestures.Thoughtful, async=true)
-        }
+            furhat.say{
+                random {
+                    +"Heb jijl een idee wat het antwoord kan zijn?"
+                    +"Heb jijl een idee wat het antwoord is?"
+                }}
+                    furhat.gesture(Gestures.Thoughtful, async=true)
+                    furhat.gesture(Gestures.Smile, async=true)
+                }
         else{
-            furhat.say("Heb jijl een idee wat het antwoord kan zijn?")
+            furhat.say{
+                random {
+                    +"Heb jijl een idee wat het antwoord kan zijn?"
+                    +"Heb jijl een idee wat het antwoord is?"
+                }}
         }
     }
 
     onButton("Waarom denk je dat?") {
         if(TRUSTWORTHY){
-            furhat.say("Waarom denk je dat?")
-            furhat.gesture(Gestures.Thoughtful, async=true)
-        }
+            furhat.say{
+                random {
+                    +"Waarom denk je dat?"
+                    +"Waarom?"
+                }}
+                    furhat.gesture(Gestures.Thoughtful, async=true)
+                }
         else{
-            furhat.say("Waarom denk je dat?")
+            furhat.say{
+                random {
+                    +"Waarom denk je dat?"
+                    +"Waarom?"
+                }}
             furhat.gesture(Gestures.BrowFrown, async=true)
         }
-
     }
 
     onButton("Give answer suggestion"){
@@ -421,22 +453,39 @@ fun Quiz(q : List<List<String>>) : State = state(parent = Idle) {
 
     onButton("Wat vind je van die tip?") {
         if(TRUSTWORTHY){
-            furhat.say("Wat vind je van die tip?")
-            furhat.gesture(Gestures.Smile, async=true)
-        }
+            furhat.say{
+                random {
+                    +"Wat vind je van die tip?"
+                    +"Wat denk je van die tip?"
+                }}
+                    furhat.gesture(Gestures.Smile, async=true)
+                }
         else{
-            furhat.say("Wat vind je van die tip?")
+            furhat.say{
+                random {
+                    +"Wat vind je van die tip?"
+                    +"Wat denk je van die tip?"
+                }}
             furhat.gesture(Gestures.GazeAway, async=true)
         }
     }
 
     onButton("Antwoord aangeklikt?", color = Color.Green) {
         if(TRUSTWORTHY){
-            furhat.say("Heb je je antwoord hiernaast aangklikt?")
-            furhat.gesture(Gestures.Smile, async=true)
-        }
+            furhat.say{
+                random {
+                    +"Heb je je antwoord hiernaast aangklikt?"
+                    +"Heb je je antwoord al ingevuld?"
+                }}
+                    furhat.gesture(Gestures.Smile, async=true)
+                }
         else{
-            furhat.say("Heb je je antwoord hiernaast aangklikt?")
+            furhat.say {
+                random {
+                    +"Heb je je antwoord hiernaast aangklikt?"
+                    +"Heb je je antwoord al ingevuld?"
+                }
+            }
             furhat.gesture(Gestures.ExpressSad, async=true)
         }
     }

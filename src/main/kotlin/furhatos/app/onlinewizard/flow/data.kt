@@ -50,7 +50,7 @@ val answerWrongB = listOf(
 
 val suggestionsRightB = listOf(
         "Ik heb op het internet gevonden dat het bananen zijn",
-        "Ik heb op het internet gevonden dat het 42, keer is",
+        "Ik heb op het internet gevonden dat het 40, keer is",
         "Ik heb op het internet gevonden dat het op mars blauw is."
 )
 
